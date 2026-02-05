@@ -245,7 +245,7 @@
         .step b { color: var(--canada-red); display: block; margin-bottom: 4px; }
 
         .form-section { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
-        .form-section h3 { color: var(--dark-blue); margin-bottom: 20px; border-left: 4px solid var(--canada-red); padding-left: 15px; }
+        .form-section h3 { color: var(--dark-blue); margin-bottom: 20px; border-left: 4px solid var(--canada-red); padding-left: 15px; font-size: 1.1rem; }
 
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
@@ -329,9 +329,9 @@
 
     <header class="hero">
         <div class="hero-slider-container">
-            <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1503614472-8c93d56e92ce?auto=format&fit=crop&q=80&w=1600')"></div>
             <div class="hero-slide" style="background-image: url('/images/pioneers.jpg')"></div>
             <div class="hero-slide" style="background-image: url('/images/emb1.jpeg')"></div>
+            <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1503614472-8c93d56e92ce?auto=format&fit=crop&q=80&w=1600')"></div>
         </div>
         <div class="hero-content">
             <h1>Start Your Journey to Canada</h1>
@@ -350,11 +350,11 @@
                 <div class="review-card">
                     <p class="review-content">"Applying through MapleGateway was the best decision. My payment was handled securely, and I received my ITA in record time!"</p>
                     <span class="review-author">Ahmed Al-Sayed</span>
-                    <span class="review-status">Now in Toronto | Software Engineer</span>
+                    <span class="review-status">Now in Toronto | Construction Worker</span>
                 </div>
                 <div class="review-card">
                     <p class="review-content">"Trustworthy and efficient. They managed my PNP application perfectly. Highly recommend their services."</p>
-                    <span class="review-author">Johnathan Olatunji</span>
+                    <span class="review-author">Ahmed Muhammad</span>
                     <span class="review-status">Now in Halifax | Financial Analyst</span>
                 </div>
             </div>
@@ -403,28 +403,155 @@
 
         <div class="card">
             <form id="expressEntryForm">
+                <!-- IDENTITY SECTION -->
                 <div class="form-section">
                     <h3>1. Applicant Identity</h3>
                     <div class="grid-2">
-                        <div><label>Family Name</label><input type="text" id="app-surname" required></div>
-                        <div><label>Given Name(s)</label><input type="text" id="app-givenname" required></div>
+                        <div>
+                            <label>Family Name (as per Passport)</label>
+                            <input type="text" id="app-surname" required>
+                        </div>
+                        <div>
+                            <label>Given Name(s)</label>
+                            <input type="text" id="app-givenname" required>
+                        </div>
                     </div>
-                    <div>
-                        <label>Current Country</label>
+                    <div class="grid-2">
+                        <div>
+                            <label>Gender</label>
+                            <select required>
+                                <option value="">Select Gender</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Another Gender</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Date of Birth</label>
+                            <input type="date" required>
+                        </div>
+                    </div>
+                    <div class="grid-2">
+                        <div>
+                            <label>Email Address</label>
+                            <input type="email" id="app-email" required>
+                        </div>
+                        <div>
+                            <label>Phone Number (with Country Code)</label>
+                            <input type="tel" id="app-phone" placeholder="+966 50 123 4567" required>
+                        </div>
+                    </div>
+                    <div class="form-section" style="border-bottom: none; margin-bottom: 0;">
+                        <label>Current Country of Residence</label>
                         <select id="app-country" required>
                             <option value="" disabled selected>Select country</option>
-                            <option value="Saudi Arabia" data-curr="SAR" data-rate="3.75">Saudi Arabia</option>
-                            <option value="United Arab Emirates" data-curr="AED" data-rate="3.67">UAE</option>
-                            <option value="Qatar" data-curr="QAR" data-rate="3.64">Qatar</option>
-                            <option value="Kuwait" data-curr="KWD" data-rate="0.31">Kuwait</option>
-                            <option value="Egypt" data-curr="EGP" data-rate="48.55">Egypt</option>
-                            <option value="Nigeria" data-curr="NGN" data-rate="1450">Nigeria</option>
-                            <option value="India" data-curr="INR" data-rate="83.30">India</option>
-                            <option value="Pakistan" data-curr="PKR" data-rate="279.50">Pakistan</option>
+                            <optgroup label="Arab League Member States">
+                                <option value="Algeria" data-curr="DZD" data-rate="134.50">Algeria</option>
+                                <option value="Bahrain" data-curr="BHD" data-rate="0.377">Bahrain</option>
+                                <option value="Comoros" data-curr="KMF" data-rate="451.00">Comoros</option>
+                                <option value="Djibouti" data-curr="DJF" data-rate="177.72">Djibouti</option>
+                                <option value="Egypt" data-curr="EGP" data-rate="48.55">Egypt</option>
+                                <option value="Iraq" data-curr="IQD" data-rate="1310.00">Iraq</option>
+                                <option value="Jordan" data-curr="JOD" data-rate="0.71">Jordan</option>
+                                <option value="Kuwait" data-curr="KWD" data-rate="0.31">Kuwait</option>
+                                <option value="Lebanon" data-curr="LBP" data-rate="89500">Lebanon</option>
+                                <option value="Libya" data-curr="LYD" data-rate="4.82">Libya</option>
+                                <option value="Mauritania" data-curr="MRU" data-rate="39.50">Mauritania</option>
+                                <option value="Morocco" data-curr="MAD" data-rate="10.10">Morocco</option>
+                                <option value="Oman" data-curr="OMR" data-rate="0.384">Oman</option>
+                                <option value="Palestine" data-curr="ILS" data-rate="3.65">Palestine</option>
+                                <option value="Qatar" data-curr="QAR" data-rate="3.64">Qatar</option>
+                                <option value="Saudi Arabia" data-curr="SAR" data-rate="3.75">Saudi Arabia</option>
+                                <option value="Somalia" data-curr="SOS" data-rate="570.00">Somalia</option>
+                                <option value="Sudan" data-curr="SDG" data-rate="600.00">Sudan</option>
+                                <option value="Syria" data-curr="SYP" data-rate="13000.00">Syria</option>
+                                <option value="Tunisia" data-curr="TND" data-rate="3.12">Tunisia</option>
+                                <option value="United Arab Emirates" data-curr="AED" data-rate="3.67">United Arab Emirates</option>
+                                <option value="Yemen" data-curr="YER" data-rate="250.00">Yemen</option>
+                            </optgroup>
+                            <optgroup label="Other Regions">
+                                <option value="India" data-curr="INR" data-rate="83.30">India</option>
+                                <option value="Pakistan" data-curr="PKR" data-rate="279.50">Pakistan</option>
+                                <option value="United Kingdom" data-curr="GBP" data-rate="0.79">United Kingdom</option>
+                                <option value="Philippines" data-curr="PHP" data-rate="56.10">Philippines</option>
+                            </optgroup>
                         </select>
+                        <label>Full Residential Address (House/Apartment No, Building, Street, District, Postal Code)</label>
+                        <textarea id="app-address" placeholder="e.g. Apt 4B, Blue Tower, King Fahd Road, Al Olaya District, Riyadh, 12211, KSA" rows="3" required></textarea>
                     </div>
                 </div>
-                <button type="submit" class="cta-button" style="width: 100%;">Submit Official Assessment</button>
+
+                <!-- EDUCATION SECTION -->
+                <div class="form-section">
+                    <h3>2. Education History</h3>
+                    <label>Highest Level of Education Completed</label>
+                    <select required>
+                        <option value="">Select Education Level</option>
+                        <option>Doctoral degree (PhD)</option>
+                        <option>Master's degree</option>
+                        <option>Bachelor's degree (3 or more years)</option>
+                        <option>Two or more certificates (one must be 3+ years)</option>
+                        <option>Secondary school (high school)</option>
+                    </select>
+                    <label>Have you received an ECA (Educational Credential Assessment) or any Educational report?</label>
+                    <select required>
+                        <option>No</option>
+                        <option>Yes, within the last 5 years</option>
+                    </select>
+                </div>
+
+                <!-- JOB LISTING / INTEREST SECTION -->
+                <div class="form-section">
+                    <h3>3. Job Interests & Availability</h3>
+                    <p style="font-size: 0.85rem; color: #666; margin-bottom: 20px;">Select occupations you are interested in. These rates represent 2026 average Canadian hourly wages.</p>
+                    
+                    <div class="job-category">
+                        <h4>Professional & Office Jobs</h4>
+                        <div class="job-grid">
+                            <label class="job-option"><input type="checkbox"> Nurse / Healthcare Aide <span class="pay-rate">$42.00/hr</span></label>
+                            <label class="job-option"><input type="checkbox"> Accountant / Bookkeeper <span class="pay-rate">$44.00/hr</span></label>
+                            <label class="job-option"><input type="checkbox"> Admin Assistant <span class="pay-rate">$22.00/hr</span></label>
+                            <label class="job-option"><input type="checkbox"> Customer Support <span class="pay-rate">$20.00/hr</span></label>
+                        </div>
+                    </div>
+
+                    <div class="job-category">
+                        <h4>Hands-On & Trade Jobs</h4>
+                        <div class="job-grid">
+                            <label class="job-option"><input type="checkbox"> Truck Driver <span class="pay-rate">$28.00/hr</span></label>
+                            <label class="job-option"><input type="checkbox"> Electrician / Plumber <span class="pay-rate">$40.00/hr</span></label>
+                            <label class="job-option"><input type="checkbox"> Construction Worker <span class="pay-rate">$23.00/hr</span></label>
+                            <label class="job-option"><input type="checkbox"> Auto Mechanic <span class="pay-rate">$34.00/hr</span></label>
+                        </div>
+                    </div>
+
+                    <div class="job-category">
+                        <h4>Service & General Labor</h4>
+                        <div class="job-grid">
+                            <label class="job-option"><input type="checkbox"> Warehouse Worker <span class="pay-rate">$22.00/hr</span></label>
+                            <label class="job-option"><input type="checkbox"> Delivery Driver <span class="pay-rate">$21.00/hr</span></label>
+                            <label class="job-option"><input type="checkbox"> Retail Clerk <span class="pay-rate">$18.50/hr</span></label>
+                            <label class="job-option"><input type="checkbox"> Cook / Server <span class="pay-rate">$20.50/hr</span></label>
+                            <label class="job-option"><input type="checkbox"> Security Guard <span class="pay-rate">$19.00/hr</span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WORK HISTORY -->
+                <div class="form-section">
+                    <h3>4. Work Experience</h3>
+                    <label>Total years of skilled work experience outside Canada</label>
+                    <select required>
+                        <option>None</option>
+                        <option>1 year</option>
+                        <option>2 years</option>
+                        <option>3 years or more</option>
+                    </select>
+                    <label>Details of Most Recent Role</label>
+                    <textarea placeholder="Job Title, Company Name, and Primary Duties..." rows="4" required></textarea>
+                </div>
+
+                <button type="submit" class="cta-button" style="width: 100%;">Submit Application Form</button>
             </form>
         </div>
     </div>
