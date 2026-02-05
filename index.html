@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MapleGateway | Canadian Immigration Services</title>
+    <style>
+        /* Canada.ca Brand Colors & Variables */
+        :root {
+            --canada-red: #d30c0c;
+            --dark-blue: #002452;
+            --light-grey: #f8f9fa;
+            --white: #ffffff;
+            --shadow: 0 4px 15px rgba(0,0,0,0.08);
+            --border: #dee2e6;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-grey);
+            color: #212529;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--white);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--dark-blue);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .canada-flag {
+            width: 40px;
+            height: 20px;
+            border: 1px solid #eee;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark-blue);
+            font-weight: 600;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--canada-red);
+        }
+
+        /* View Management */
+        .view {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+        .view.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            color: white;
+            padding: 100px 5% 100px; 
+            overflow: hidden;
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 5;
+            max-width: 50%;
+        }
+
+        .hero h1 { font-size: clamp(2rem, 5vw, 3.8rem); margin-bottom: 20px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .hero p { font-size: clamp(1rem, 1.5vw, 1.35rem); margin-bottom: 30px; }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--canada-red);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: 0.2s;
+            text-align: center;
+        }
+
+        /* Hero Slider CSS */
+        .hero-slider-container {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .hero-slide.active { opacity: 1; }
+
+        .hero::after {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(110deg, rgba(10,20,30,0.8), rgba(10,20,30,0.4));
+            z-index: -1;
+        }
+
+        /* NEWS TICKER */
+        .news-container {
+            background: var(--dark-blue);
+            color: white;
+            padding: 15px 0;
+            overflow: hidden;
+            position: relative;
+        }
+        .news-label {
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: var(--canada-red);
+            padding: 15px 20px;
+            z-index: 10;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+        .news-slider {
+            display: flex;
+            white-space: nowrap;
+            padding-left: 150px;
+            animation: ticker 40s linear infinite;
+        }
+        .news-item {
+            padding: 0 40px;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .news-item::before { content: "•"; color: var(--canada-red); font-size: 1.5rem; }
+
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* REVIEWS SLIDER */
+        .reviews-section {
+            padding: 60px 5%;
+            background: white;
+            text-align: center;
+        }
+        .reviews-section h2 { color: var(--dark-blue); margin-bottom: 40px; }
+        .reviews-viewport {
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+            height: 250px;
+        }
+        .reviews-track {
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .review-card {
+            min-width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .review-content {
+            font-style: italic;
+            font-size: 1.2rem;
+            color: #444;
+            margin-bottom: 20px;
+        }
+        .review-author {
+            font-weight: bold;
+            color: var(--dark-blue);
+            display: block;
+        }
+        .review-status {
+            font-size: 0.85rem;
+            color: var(--canada-red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Form Styling */
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 5%; }
+        .card { background: white; padding: 40px; border-radius: 12px; box-shadow: var(--shadow); }
+        
+        .application-brief {
+            background: #fdfdfd;
+            border-left: 5px solid var(--canada-red);
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+        .application-brief h2 { margin-top: 0; color: var(--dark-blue); font-size: 1.4rem; }
+        .application-brief p { color: #555; font-size: 0.95rem; margin-bottom: 15px; }
+        .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .step { background: #fff; border: 1px solid #eee; padding: 12px; border-radius: 6px; font-size: 0.85rem; }
+        .step b { color: var(--canada-red); display: block; margin-bottom: 4px; }
+
+        .form-section { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+        .form-section h3 { color: var(--dark-blue); margin-bottom: 20px; border-left: 4px solid var(--canada-red); padding-left: 15px; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+
+        label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.85rem; color: #555; text-transform: uppercase; letter-spacing: 0.5px; }
+        input, select, textarea {
+            width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid var(--border);
+            border-radius: 6px; font-family: inherit; box-sizing: border-box; font-size: 0.95rem;
+        }
+
+        .page-header { background: var(--dark-blue); color: white; padding: 40px 5%; text-align: center; }
+
+        .job-category {
+            margin-bottom: 25px;
+            background: #fdfdfd;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .job-category h4 { margin-top: 0; color: var(--canada-red); border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; font-size: 0.9rem; }
+        .job-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+        .job-option { 
+            display: flex; align-items: center; gap: 8px; font-size: 0.85rem; background: white; 
+            padding: 8px; border-radius: 4px; border: 1px solid #eee; transition: background 0.2s;
+        }
+        .job-option input { width: auto; margin: 0; }
+        .pay-rate { color: #28a745; font-weight: bold; margin-left: auto; font-size: 0.75rem; }
+
+        /* Payment View */
+        .payment-card {
+            text-align: center; max-width: 600px; margin: 40px auto;
+            padding: 50px 40px; background: white; border-radius: 16px; box-shadow: var(--shadow);
+            border: 1px solid #eee;
+        }
+        .invoice-box {
+            background: #fdfdfd; border: 1px dashed #ccc; padding: 20px; margin: 20px 0; border-radius: 8px; text-align: left;
+        }
+        .invoice-row { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #f0f0f0; padding-bottom: 5px; }
+        .price-tag { font-size: 2.8rem; font-weight: 800; color: var(--dark-blue); margin: 10px 0; }
+        .conversion { font-size: 1.4rem; color: var(--canada-red); font-weight: 700; margin-bottom: 30px; padding: 10px; background: #fff5f5; border-radius: 8px; display: inline-block; }
+
+        footer { background: var(--dark-blue); color: white; padding: 40px 20px; text-align: center; margin-top: 60px; }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .hero-content { max-width: 100%; text-align: center; }
+            .news-label { display: none; }
+            .news-slider { padding-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo" onclick="showView('home')">
+        <svg class="canada-flag" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320">
+            <rect width="640" height="320" fill="#ff0000"/>
+            <rect width="320" height="320" x="160" fill="#ffffff"/>
+            <path d="M320 54.3c-2.3 8.3-4.5 16.7-6.8 25-3.3-2-6.5-4.1-9.8-6.1l-2.2 4.9c-4.2-2.3-8.4-4.6-12.7-6.9l-2.6 15.1c-4.6-1.5-9.1-3.1-13.7-4.6 1.4 6.7 2.7 13.5 4.1 20.2-5.4.1-10.7.3-16.1.4 2.8 5.6 5.6 11.2 8.4 16.8-5 .9-9.9 1.8-14.9 2.7 4.1 4.7 8.2 9.5 12.3 14.2-3.4 3.1-6.7 6.3-10.1 9.4 6 2.6 12 5.1 18 7.7-1.1 5.4-2.2 10.7-3.4 16.1 7.2-2.3 14.5-4.6 21.7-6.9.1 5.9.2 11.8.3 17.7 5.7-4.7 11.5-9.4 17.2-14.2 5.7 4.7 11.5 9.4 17.2 14.2.1-5.9.2-11.8.3-17.7 7.2 2.3 14.5 4.6 21.7 6.9-1.2-5.4-2.3-10.7-3.4-16.1 6-2.6 12-5.1 18-7.7-3.4-3.1-6.7-6.3-10.1-9.4 4.1-4.7 8.2-9.5 12.3-14.2-5-.9-9.9-1.8-14.9-2.7 2.8-5.6 5.6-11.2 8.4-16.8-5.4-.1-10.7-.3-16.1-.4 1.4-6.7 2.7-13.5 4.1-20.2-4.6 1.5-9.1 3.1-13.7 4.6l-2.6-15.1c-4.2 2.3-8.4 4.6-12.7 6.9l-2.2-4.9c-3.3 2-6.5 4.1-9.8 6.1-2.4-8.3-4.5-16.7-6.8-25z" fill="#ff0000"/>
+            <rect width="18" height="60" x="311" y="210" fill="#ff0000"/>
+        </svg>
+        MapleGateway
+    </div>
+    <ul>
+        <li><a onclick="showView('home')" id="nav-home" class="active">Home</a></li>
+        <li><a onclick="showView('visas')" id="nav-visas">Programs</a></li>
+        <li><a onclick="showView('contact')" id="nav-contact">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- HOME -->
+<div id="view-home" class="view active">
+    <div class="news-container">
+        <div class="news-label">Live Updates</div>
+        <div class="news-slider">
+            <div class="news-item">Feb 2026: IRCC launches fast-track work permit processing for healthcare roles.</div>
+            <div class="news-item">Feb 2026: Express Entry Draw issues 423 invitations to PNP candidates.</div>
+            <div class="news-item">New Levels Plan: Canada targets 380,000 new residents for 2026.</div>
+        </div>
+    </div>
+
+    <header class="hero">
+        <div class="hero-slider-container">
+            <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1503614472-8c93d56e92ce?auto=format&fit=crop&q=80&w=1600')"></div>
+            <div class="hero-slide" style="background-image: url('/images/pioneers.jpg')"></div>
+            <div class="hero-slide" style="background-image: url('/images/emb1.jpeg')"></div>
+        </div>
+        <div class="hero-content">
+            <h1>Start Your Journey to Canada</h1>
+            <p>Reliable immigration pathways for skilled workers, students, and families. Fast-track your Express Entry profile today.</p>
+            <div class="cta-group">
+                <a onclick="showView('visas')" class="cta-button">View Programs</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- REVIEWS SECTION -->
+    <section class="reviews-section">
+        <h2>Success Stories from Our Community</h2>
+        <div class="reviews-viewport">
+            <div class="reviews-track" id="reviewsTrack">
+                <div class="review-card">
+                    <p class="review-content">"Applying through MapleGateway was the best decision. My payment was handled securely, and I received my ITA in record time!"</p>
+                    <span class="review-author">Ahmed Al-Sayed</span>
+                    <span class="review-status">Now in Toronto | Software Engineer</span>
+                </div>
+                <div class="review-card">
+                    <p class="review-content">"Trustworthy and efficient. They managed my PNP application perfectly. Highly recommend their services."</p>
+                    <span class="review-author">Johnathan Olatunji</span>
+                    <span class="review-status">Now in Halifax | Financial Analyst</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- VISAS -->
+<div id="view-visas" class="view">
+    <div class="page-header">
+        <h1>Immigration Programs</h1>
+        <p>Select your pathway to Permanent Residency</p>
+    </div>
+    <div class="container">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+            <div class="card" style="border-top: 5px solid var(--canada-red);">
+                <h3>Express Entry</h3>
+                <p>The primary system for skilled immigrants to move to Canada permanently. Based on the Comprehensive Ranking System (CRS).</p>
+                <button class="cta-button" style="width:100%" onclick="showView('apply')">Apply Now</button>
+            </div>
+            <div class="card">
+                <h3>Study Permit</h3>
+                <p>Gain world-class education and build a bridge to permanent residency through work experience.</p>
+                <button class="cta-button" style="width:100%; background: #ccc; cursor: not-allowed;">Registration Closed</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- APPLICATION FORM -->
+<div id="view-apply" class="view">
+    <div class="page-header">
+        <h1>Federal Skilled Worker Application</h1>
+        <p>Detailed Assessment & Procedural Review</p>
+    </div>
+    <div class="container">
+        <div class="application-brief">
+            <h2>Express Entry Pathway Overview</h2>
+            <p>The Express Entry (EE) system is a competitive merit-based system used to manage applications for Permanent Residency (PR).</p>
+            <div class="process-steps">
+                <div class="step"><b>Step 1: Assessment</b> NOC verification and initial scoring.</div>
+                <div class="step"><b>Step 2: Profile Entry</b> Entry into the eligible candidate pool.</div>
+                <div class="step"><b>Step 3: ITA Selection</b> Receive Invitation to Apply for PR.</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <form id="expressEntryForm">
+                <div class="form-section">
+                    <h3>1. Applicant Identity</h3>
+                    <div class="grid-2">
+                        <div><label>Family Name</label><input type="text" id="app-surname" required></div>
+                        <div><label>Given Name(s)</label><input type="text" id="app-givenname" required></div>
+                    </div>
+                    <div>
+                        <label>Current Country</label>
+                        <select id="app-country" required>
+                            <option value="" disabled selected>Select country</option>
+                            <option value="Saudi Arabia" data-curr="SAR" data-rate="3.75">Saudi Arabia</option>
+                            <option value="United Arab Emirates" data-curr="AED" data-rate="3.67">UAE</option>
+                            <option value="Qatar" data-curr="QAR" data-rate="3.64">Qatar</option>
+                            <option value="Kuwait" data-curr="KWD" data-rate="0.31">Kuwait</option>
+                            <option value="Egypt" data-curr="EGP" data-rate="48.55">Egypt</option>
+                            <option value="Nigeria" data-curr="NGN" data-rate="1450">Nigeria</option>
+                            <option value="India" data-curr="INR" data-rate="83.30">India</option>
+                            <option value="Pakistan" data-curr="PKR" data-rate="279.50">Pakistan</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="cta-button" style="width: 100%;">Submit Official Assessment</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- PAYMENT VIEW -->
+<div id="view-payment" class="view">
+    <div class="container">
+        <div class="payment-card">
+            <h2>Payment Invoice</h2>
+            <div class="invoice-box">
+                <div class="invoice-row"><span>Applicant:</span><strong id="pay-name">User</strong></div>
+                <div class="invoice-row"><span>Country:</span><strong id="pay-country">Unknown</strong></div>
+                <div class="invoice-row"><span>Base Fee:</span><strong>$550.00 USD</strong></div>
+            </div>
+            <div class="price-tag">$550.00 USD</div>
+            <div class="conversion" id="conversion-display">Calculating...</div>
+            <p style="color: #666; margin-bottom: 30px;">Complete submission via WhatsApp to receive the payment link.</p>
+            <button class="cta-button" style="width: 100%;" onclick="handleWhatsAppPayment()">Proceed to make Payment</button>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 MapleGateway Immigration Services. All Rights Reserved.</p>
+</footer>
+
+<script>
+    let currentPaymentData = { name: '', country: '', conversionText: '' };
+    let heroSlideIndex = 0;
+
+    function initHeroSlider() {
+        const slides = document.querySelectorAll('.hero-slide');
+        if(!slides.length) return;
+        setInterval(() => {
+            slides[heroSlideIndex].classList.remove('active');
+            heroSlideIndex = (heroSlideIndex + 1) % slides.length;
+            slides[heroSlideIndex].classList.add('active');
+        }, 3000);
+    }
+
+    function showView(viewId) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.getElementById('view-' + viewId).classList.add('active');
+        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+        const navId = (viewId === 'apply' || viewId === 'payment') ? 'visas' : viewId;
+        const navLink = document.getElementById('nav-' + navId);
+        if(navLink) navLink.classList.add('active');
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    function handleWhatsAppPayment() {
+        const phoneNumber = "+1(945)3915947";
+        const msg = `Immigration Assessment Payment\nName: ${currentPaymentData.name}\nCountry: ${currentPaymentData.country}\nFee: $550.00 USD\n${currentPaymentData.conversionText}`;
+        window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    // Review Slider Logic
+    let reviewIndex = 0;
+    setInterval(() => {
+        const track = document.getElementById('reviewsTrack');
+        if(!track) return;
+        reviewIndex = (reviewIndex + 1) % 2;
+        track.style.transform = `translateX(-${reviewIndex * 100}%)`;
+    }, 5000);
+
+    document.getElementById('expressEntryForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const givenName = document.getElementById('app-givenname').value;
+        const surname = document.getElementById('app-surname').value;
+        const countrySelect = document.getElementById('app-country');
+        const selectedOption = countrySelect.options[countrySelect.selectedIndex];
+        
+        const rate = parseFloat(selectedOption.getAttribute('data-rate'));
+        const currency = selectedOption.getAttribute('data-curr');
+        const converted = (550 * rate).toLocaleString();
+
+        currentPaymentData.name = `${givenName} ${surname}`;
+        currentPaymentData.country = countrySelect.value;
+        currentPaymentData.conversionText = `Equivalent to ~${converted} ${currency}`;
+
+        document.getElementById('pay-name').textContent = currentPaymentData.name;
+        document.getElementById('pay-country').textContent = currentPaymentData.country;
+        document.getElementById('conversion-display').textContent = currentPaymentData.conversionText;
+
+        showView('payment');
+    });
+
+    window.onload = initHeroSlider;
+</script>
+
+</body>
+</html>
